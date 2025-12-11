@@ -8,8 +8,12 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "development"
     
-    # Database
-    DATABASE_URL: str
+    # Database - separate variables
+    DB_HOST: str = "localhost"
+    DB_PORT: int = 5432
+    DB_NAME: str = "food_safety"
+    DB_USER: str = "postgres"
+    DB_PASSWORD: str
     
     # Redis
     REDIS_URL: str
@@ -39,4 +43,10 @@ class Settings(BaseSettings):
         env_file = ".env"
         case_sensitive = True
 
+    @property
+    def DATABASE_URL(self) -> str:
+        """Construct DATABASE_URL from separate components"""
+        return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+
 settings = Settings()
+
