@@ -4,7 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from contextlib import asynccontextmanager
 
 from app.config import settings
-from app.api.v1.routes import auth, users, vendors, prices, surplus, analytics, inference, food_items
+from app.api.v1.routes import auth, users, vendors, prices, surplus, analytics, inference, food_items, ngo
 from app.core.exceptions import (
     AppException,
     app_exception_handler,
@@ -66,6 +66,7 @@ app.include_router(surplus.router, prefix=f"{settings.API_V1_STR}/surplus", tags
 app.include_router(analytics.router, prefix=f"{settings.API_V1_STR}/analytics", tags=["analytics"])
 app.include_router(inference.router, prefix=f"{settings.API_V1_STR}/inference", tags=["inference"])
 app.include_router(food_items.router, prefix=f"{settings.API_V1_STR}/food-items", tags=["food-items"])
+app.include_router(ngo.router, prefix=f"{settings.API_V1_STR}/ngo", tags=["ngo"])
 
 @app.get("/")
 async def root():
